@@ -18,7 +18,7 @@ pub struct Artist {
     image: Vec<Image>,
     mbid: String,
     url: String,
-    playcount: String,
+    pub playcount: String,
     #[serde(rename = "@attr")]
     pub attr: ArtistAttr,
     pub name: String,
