@@ -8,13 +8,11 @@ use crate::response::*;
 
 fn mount_url(config: &Config) -> Result<String, Box<dyn Error>> {
     let api_key = env::var("API_KEY")?;
-    let mut url = "http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&period=7day&limit=5&format=json&user=".to_string();
+    let url = "http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&period=7day&limit=5&format=json&user=".to_string();
 
-    url.push_str(&config.username);
-    url.push_str("&api_key=");
-    url.push_str(&api_key);
+    let result = format!("{}{}&api_key={}", url, &config.username, api_key);
 
-    Ok(url)
+    Ok(result)
 }
 
 fn get_artists(url: &str) -> Result<Response, reqwest::Error> {
