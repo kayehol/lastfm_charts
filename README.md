@@ -1,11 +1,17 @@
-### lastfm_charts
+# lastfm-charts
 
-Get your user charts from LastFM as an ordered list text output from your command line.
+Get your user charts from LastFM as text output from your command line.
 
-Usage:
-Just pass username as an argument
+## Installation
+Linux:
+- Download the latest release
+- Make the binary executable: `chmod +x lastfm-charts`
+- Copy to your shell path: `cp lastfm-charts /usr/local/bin`
 
-`lastfm_charts username`
+## Usage
+Pass username as an argument
+
+`lastfm-charts username`
 
 Output:
 ```
