@@ -1,5 +1,4 @@
 use std::error::Error;
-use std::env;
 pub mod config;
 mod response;
 
@@ -7,10 +6,10 @@ use crate::config::Config;
 use crate::response::*;
 
 fn mount_url(config: &Config) -> Result<String, Box<dyn Error>> {
-    let api_key = env::var("API_KEY")?;
+    static API_KEY: &'static str = std::env!("API_KEY");
     let url = "http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&period=7day&limit=5&format=json&user=".to_string();
 
-    let result = format!("{}{}&api_key={}", url, &config.username, api_key);
+    let result = format!("{}{}&api_key={}", url, &config.username, API_KEY);
 
     Ok(result)
 }
