@@ -7,9 +7,31 @@ use crate::response::*;
 
 fn mount_url(config: &Config) -> Result<String, Box<dyn Error>> {
     static API_KEY: &'static str = std::env!("API_KEY");
-    let url = "http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&period=7day&limit=5&format=json&user=".to_string();
 
-    let result = format!("{}{}&api_key={}", url, &config.username, API_KEY);
+    let url = "http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&period=7day&format=json&user=".to_string();
+    let username = &config.username;
+    let option_flag = &config.option_flag;
+    let mut option_value = "";
+    let default_limit = &String::from("5");
+    let limit_flag = &String::from("-l");
+    let mut limit = "&limit=".to_string();
+
+    match option_flag {
+        limit_flag => {
+            option_value = match &config.option_value {
+                Some(value) => value,
+                None  => default_limit
+            };
+        },
+        _ => {},
+    };
+
+    limit.push_str(option_value);
+
+    println!("option value is {}", &option_value);
+
+    let result = format!("{}{}{}&api_key={}", url, username, limit, API_KEY);
+    dbg!(&result);
 
     Ok(result)
 }

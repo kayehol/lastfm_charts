@@ -1,5 +1,7 @@
 pub struct Config {
     pub username: String,
+    pub option_flag: Option<String>,
+    pub option_value: Option<String>,
 }
 
 impl Config {
@@ -13,8 +15,20 @@ impl Config {
             None => return Err("Please pass username as an argument"),
         };
 
+        let option_flag = match args.next() {
+            Some(arg) => Some(arg),
+            None => None,
+        };
+
+        let option_value = match args.next() {
+            Some(arg) => Some(arg),
+            None => None,
+        };
+
         Ok(Config {
-            username
+            username,
+            option_flag,
+            option_value
         })
     }
 }
