@@ -8,32 +8,20 @@ use crate::response::*;
 fn mount_url(config: &Config) -> Result<String, Box<dyn Error>> {
     static API_KEY: &'static str = std::env!("API_KEY");
     let username = &config.username;
-    let option_flag = &config.option_flag;
 
     let url_root = "http://ws.audioscrobbler.com/2.0/?".to_string();
     let method = "&method=user.gettopartists".to_string();
     let period = "&period=7day".to_string();
     let format = "&format=json".to_string();
+    let default_limit = "5".to_string();
+
+    let option_value = config.option_value.as_ref().unwrap_or(&default_limit);
 
     let mut user = "&user=".to_string();
     let mut limit = "&limit=".to_string();
-    let mut option_value = "";
-
-    let default_limit = &String::from("5");
-    let limit_flag = &String::from("-l");
-
-    match option_flag {
-        limit_flag => {
-            option_value = match &config.option_value {
-                Some(value) => value,
-                None  => default_limit
-            };
-        },
-        _ => {},
-    };
 
     user.push_str(username);
-    limit.push_str(option_value);
+    limit.push_str(&option_value);
 
     let result = format!("{url_root}{method}{period}{format}{user}{limit}&api_key={API_KEY}");
 
