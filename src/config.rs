@@ -1,34 +1,29 @@
+use clap::Parser;
+
 pub struct Config {
     pub username: String,
-    pub option_flag: Option<String>,
-    pub option_value: Option<String>,
+    pub limit: String,
+}
+
+#[derive(Parser)]
+#[command(name = "LastFM Charts")]
+#[command(version, about = "Get your weekly charts", long_about = None)]
+struct Cli {
+    #[arg(short, long)]
+    username: String,
+    #[arg(short, long)]
+    limit: Option<String>,
 }
 
 impl Config {
-    pub fn build(
-        mut args: impl Iterator<Item = String>,
-    ) -> Result<Config, &'static str> {
-        args.next();
+    pub fn build() -> Config {
+        let cli = Cli::parse();
+        let default_limit = "5".to_string();
+        let final_limit = cli.limit.unwrap_or(default_limit);
 
-        let username = match args.next() {
-            Some(arg) => arg,
-            None => return Err("Please pass username as an argument"),
-        };
-
-        let option_flag = match args.next() {
-            Some(arg) => Some(arg),
-            None => None,
-        };
-
-        let option_value = match args.next() {
-            Some(arg) => Some(arg),
-            None => None,
-        };
-
-        Ok(Config {
-            username,
-            option_flag,
-            option_value
-        })
+        Config {
+            username: cli.username,
+            limit: final_limit,
+        }
     }
 }
