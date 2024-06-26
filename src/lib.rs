@@ -9,20 +9,23 @@ fn mount_url(config: &Config) -> Result<String, Box<dyn Error>> {
     static API_KEY: &str = std::env!("API_KEY");
     let username = &config.username;
     let limit = &config.limit;
+    let period = &config.period;
 
     let url_root = "http://ws.audioscrobbler.com/2.0/?".to_string();
     let method = "&method=user.gettopartists".to_string();
-    let period = "&period=7day".to_string();
     let format = "&format=json".to_string();
 
     let mut user_param = "&user=".to_string();
     let mut limit_param = "&limit=".to_string();
+    let mut period_param = "&period=".to_string();
 
     user_param.push_str(username);
     limit_param.push_str(limit);
+    period_param.push_str(period);
 
-    let result =
-        format!("{url_root}{method}{period}{format}{user_param}{limit_param}&api_key={API_KEY}");
+    let result = format!(
+        "{url_root}{method}{period_param}{format}{user_param}{limit_param}&api_key={API_KEY}"
+    );
 
     Ok(result)
 }
