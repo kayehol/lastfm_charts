@@ -6,7 +6,7 @@ use crate::config::Config;
 use crate::response::*;
 
 fn mount_url(config: &Config) -> Result<String, Box<dyn Error>> {
-    static API_KEY: &'static str = std::env!("API_KEY");
+    static API_KEY: &str = std::env!("API_KEY");
     let username = &config.username;
     let limit = &config.limit;
 
