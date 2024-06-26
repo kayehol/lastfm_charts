@@ -12,8 +12,8 @@ pub struct Config {
 struct Cli {
     #[arg(short, long)]
     username: String,
-    #[arg(short, long)]
-    limit: Option<String>,
+    #[arg(short, long, value_parser = clap::value_parser!(u32).range(1..=10))]
+    limit: Option<u32>,
     #[arg(short, long)]
     period: Option<String>,
 }
@@ -21,7 +21,7 @@ struct Cli {
 impl Config {
     pub fn build() -> Config {
         let cli = Cli::parse();
-        let default_limit = "5".to_string();
+        let default_limit: u32 = 5;
         let default_period = "7day".to_string();
 
         let final_limit = cli.limit.unwrap_or(default_limit);
@@ -29,7 +29,7 @@ impl Config {
 
         Config {
             username: cli.username,
-            limit: final_limit,
+            limit: final_limit.to_string(),
             period: final_period,
         }
     }
