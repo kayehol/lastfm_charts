@@ -39,7 +39,7 @@ fn format(response: &Response) {
     let artists = &response.topartists.artist;
     let username = &response.topartists.attr.user;
 
-    println!("{}'s weekly charts", username);
+    println!("{}'s charts", username);
     for artist in artists {
         let rank = &artist.attr.rank;
         let name = &artist.name;
