@@ -9,28 +9,20 @@ Linux:
 - Copy to your shell path: `cp lastfm-charts /usr/local/bin`
 
 ## Usage
-#### Pass username as an argument
-
-`lastfm-charts username`
-
-Output:
 ```
-username's weekly chart:
-1. Artist 1
-2. Artist 2
-3. Artist 3
-4. Artist 4
-5. Artist 5
-```
-#### Limit the number of results shown (optional, default is 5)
+lastfm-charts -u <username> [options]
 
-`lastfm-charts username -l 3`
-
-Output:
+-l, --limit <limit>           limit results from 1 to 10 (default: 5)
+-p, --period <period>         get results from a range of periods : 7day, 1month, 6month, 12month, overall (default: 7day)
 ```
+## Example
+Get user foo's top 3 artists from the last 6 months
+```
+lastfm-charts -u foo -l 3 -p 6month
+
+foo's charts
 1. Artist 1
 2. Artist 2
 3. Artist 3
 ```
-
-More support soon.
+```
